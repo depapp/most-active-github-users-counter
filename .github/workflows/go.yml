@@ -32,8 +32,8 @@ jobs:
           go run *.go \
             --token ${{ secrets.TOKENZ }} \
             --preset indonesia \
-            --amount 7000 \
-            --consider 7000 \
+            --amount 6000 \
+            --consider 6000 \
             --output json \
             --file ./data
       - run: ls -al
@@ -49,18 +49,11 @@ jobs:
       
       - name: push generated file
         run: |
-          d=$(date +"%Y-%m-%d-%H-%M")
+          d=$(date +"%Y-%m-%d")
           git config --global user.name 'Depa Panjie Purnama'
           git config --global user.email 'depapp@users.noreply.github.com'
-          git fetch --all
-          git reset --hard origin/master
           git pull
           ls -al
           git add indogithubers.json
-          # Check if there are any changes to commit
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -am "update indogithubers data - $d"
-            git push
-          fi
+          git commit -am "update indogithubers data - $d"
+          git push
