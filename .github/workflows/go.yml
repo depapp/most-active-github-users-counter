@@ -49,7 +49,7 @@ jobs:
       
       - name: push generated file
         run: |
-          d=$(date +"%Y-%m-%d")
+          d=$(date +"%Y-%m-%d-%H-%M")
           git config --global user.name 'Depa Panjie Purnama'
           git config --global user.email 'depapp@users.noreply.github.com'
           git fetch --all
@@ -57,5 +57,10 @@ jobs:
           git pull
           ls -al
           git add indogithubers.json
-          git commit -am "update indogithubers data - $d"
-          git push
+          # Check if there are any changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -am "update indogithubers data - $d"
+            git push
+          fi
